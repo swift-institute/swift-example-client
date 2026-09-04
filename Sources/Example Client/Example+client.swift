@@ -8,7 +8,7 @@ import Example_HTTP
 public import Example_Signature
 public import HTTP
 public import HTTP_Client
-import HTTP_Coder
+import HTTP_Reply
 import Tagged_Coder
 
 extension Example {
