@@ -1,4 +1,3 @@
-import Coder
 public import Example
 import Example_Counter
 import Example_Counter_Signature

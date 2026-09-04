@@ -1,4 +1,3 @@
-import Coder
 import Either
 import Example
 import Example_Client
@@ -14,6 +13,7 @@ import HTTP_Reply
 import HTTP_Router
 import Operation
 import Tagged
+import Tagged_Standard_Library_Integration
 import Tagged_Coder
 import Testing
 
@@ -27,7 +27,7 @@ private func responder() -> HTTP.Interpretation<HTTP.Router.Error> {
             case .counter(.increment(let application)):
                 let value: Example.Counter.Value
                 do throws(Example.Counter.Error) {
-                    value = try Example.Counter.increment(.init(0), limit: application.input)
+                    value = try Example.Counter.increment(0, limit: application.input)
                 } catch {
                     return try .badRequest(error)
                 }
@@ -44,8 +44,8 @@ struct `Example.Client Tests` {
     func `a remote client exchanges every operation over an HTTP interpretation`() async throws {
         let example = Example.client(over: responder())
 
-        #expect(try await example.greeting.greet(.init("Ada")) == .init("Hello, Ada!"))
-        #expect(try await example.counter.increment(limit: .init(3)) == .init(1))
+        #expect(try await example.greeting.greet("Ada") == "Hello, Ada!")
+        #expect(try await example.counter.increment(limit: 3) == 1)
     }
 
     @Test
@@ -53,10 +53,10 @@ struct `Example.Client Tests` {
         let example = Example.client(over: responder())
 
         do throws(Either<HTTP.Interpretation<HTTP.Router.Error>.Error, Example.Counter.Error>) {
-            _ = try await example.counter.increment(limit: .init(0))
+            _ = try await example.counter.increment(limit: 0)
             Issue.record("expected the refusal")
         } catch {
-            #expect(error == .right(.limit(reached: .init(0))))
+            #expect(error == .right(.limit(reached: 0)))
         }
     }
 }

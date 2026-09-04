@@ -67,6 +67,7 @@ let package = Package(
                 .product(name: "HTTP Reply", package: "swift-http-router"),
                 .product(name: "HTTP Client", package: "swift-http-client"),
                 .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Tagged Standard Library Integration", package: "swift-tagged"),
                 .product(name: "Tagged Coder", package: "swift-tagged-coder"),
             ]
         ),
